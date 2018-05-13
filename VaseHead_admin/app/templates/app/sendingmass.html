@@ -1,0 +1,161 @@
+﻿{% extends "app/layout.html" %}
+
+{% load static %}
+{% block styles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'app/content/emoji.css' %}" />
+{% endblock styles %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h2>Массовая рассылка</h2>
+    </div>
+</div>
+<div class="container-fluid">
+  <form action="" method="post" id="mass_message_send">
+       {% csrf_token %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="description">Описание рассылки</label>
+                <input class="form-control desc" id="description" style="min-width:100%;"name="description_input">
+              </div>
+              <div class="form-group ">
+                <label for="exampleFormControlTextarea1">Сообщение</label>
+                <p class="lead emoji-picker-container">
+                     <textarea class="form-control textarea-control text" id="exampleFormControlTextarea1" style="min-width:100%;" rows="7" name="message_text" data-emojiable="true" ></textarea></p>
+              </div>
+              <div class="form-group">
+                   <button class="btn btn-primary px-3" id="send_button"><i class="fa fa-send-o" aria-hidden="true"></i> Отправить</button>
+              </div>
+        </div>
+        <input type="checkbox" class="filled-in form-check-input" id="filter" checked="checked"><label class="form-check-label" for="filter">Для всех</label>
+        <div class="filter" hidden="hidden">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="exampleFormControlSelect2">Мужчинам/женщинам?</label>
+                <select multiple class="form-control" id="gender_select" name="gender_select">
+                  <option>М</option>
+                  <option>Ж</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="exampleFormControlSelect2">Возрастной категории</label>
+                <select multiple class="form-control" id="age_select" name="age_select">
+                  <option>14–24</option>
+                  <option>25–34</option>
+                  <option>35–100</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="exampleFormControlSelect2">Для узнавших о нас из...</label>
+                <select multiple class="form-control" id="invite_select" name="invite_select">
+                  <option>Instagram</option>
+                  <option>Facebook</option>
+                  <option>Google</option>
+                  <option>Друзья</option>
+                  <option>Выставка</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="exampleFormControlSelect2">Для класа...</label>
+                <select multiple class="form-control" id="class_select" name="class_select">
+                  <option>Студент(ка)</option>
+                  <option>Работаешь в компании</option>
+                  <option>Предприниматель</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="exampleFormControlSelect2">Для тех, у кого хобби...</label>
+                <select multiple class="form-control" id="hobby_select" name="hobby_select">
+                  <option>Искусство</option>
+                  <option>Бизнес</option>
+                  <option>Спорт</option>
+                  <option>Путешествия</option>
+                  <option>Книги</option>
+                  <option>IT</option>
+                </select>
+              </div>
+        </div>
+        </div>
+    </div>
+  </form>
+</div>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Описание</th>
+      <th scope="col">Сообщение</th>
+      <th scope="col">Количество получателей</th>
+      <th scope="col">Кому</th>
+      <th scope="col">Дата</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for r in reports %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{r.description}}</td>
+      <td>{{r.text}}</td>
+      <td>{{r.count}}</td>
+      <td>{{r.filter}}</td>
+      <td>{{r.date}}</td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+<script>
+      $(function() {
+        // Initializes and creates emoji set from sprite sheet
+        window.emojiPicker = new EmojiPicker({
+          emojiable_selector: '[data-emojiable=true]',
+          assetsPath: '{% static 'app/img' %}',
+          popupButtonClasses: 'fa fa-smile-o'
+        });
+        // Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
+        // You may want to delay this step if you have dynamically created input fields that appear later in the loading process
+        // It can be called as many times as necessary; previously converted input fields will not be converted again
+        window.emojiPicker.discover();
+      });
+    </script>
+<script>
+    $('#send_button').click(function () {
+        if ($('.desc').val() == '') {
+            alert('Описание не может быть пустым!');
+            return false;
+        }
+        if ($('.text').val() == '') {
+            alert('Сообщение не может быть пустым!');
+            return false;
+        }
+        $("#mass_message_send").ajaxSubmit({ url: '', type: 'post' });
+        $( "#mass_message_send").each(function(){
+            this.reset();
+    });
+    });
+    $('#filter').change(function() {
+        if ($(this).is(":checked")) {
+            $('.filter').hide()
+        }
+        else {
+            $('.filter').show()
+        }
+        $('#textbox1').val($(this).is(':checked'));        
+    });
+</script>
+    
+<script src="{% static 'app/scripts/config.js' %}"></script>
+<script src="{% static 'app/scripts/util.js' %}"></script>
+<script src="{% static 'app/scripts/jquery.emojiarea.js' %}"></script>
+<script src="{% static 'app/scripts/emoji-picker.js' %}"></script>
+{% endblock scripts %}
+
+

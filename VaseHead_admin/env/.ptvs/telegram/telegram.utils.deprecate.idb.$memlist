@@ -1,0 +1,4 @@
+deprecate
+TelegramDeprecationWarning
+warnings
+warn_deprecate_obj

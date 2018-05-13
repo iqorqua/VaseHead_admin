@@ -1,0 +1,46 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+<div class="container">
+            <div class="jumbotron">
+                <h2>Заказы</h2>
+            </div>
+</div>
+<!--Table-->
+<table class="table table-hover">
+
+    <!--Table head-->
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Имя</th>
+            <th>Телефон</th>
+            <th>Товар</th>
+            <th>Цвет</th>
+            <th>Дата</th>
+            <th>Статус</th>
+        </tr>
+    </thead>
+    <!--Table head-->
+
+    <!--Table body-->
+    <tbody>
+        {% for o in orders%}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{o.user_name}}</td>
+            <td>{{o.user_phone}}</td>
+            <td>{{o.good_name}}</td>
+            <td>{{o.good_color}}</td>
+            <td>{{o.date}}</td>
+            <td><input type="checkbox" id="checkbox_{{o.pk}}"{% if o.is_done %}checked{% endif %}></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <!--Table body-->
+
+</table>
+<!--Table-->
+{% endblock %}
+
+

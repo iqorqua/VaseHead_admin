@@ -1,0 +1,13 @@
+dashboard
+menu
+VERSION
+models
+default_app_config
+theming
+template_loaders
+checks
+tests
+apps
+deprecate_utils
+urls
+utils

@@ -1,0 +1,178 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+{% load static %}
+<button class="btn btn-success btn-lg" type="button" data-toggle="modal" id="addnewitem" data-target="#addItem" style="float:right">Добавить</button>
+{% include 'app/add_item_modal.html' %}
+            <table class="table table-hover table-fixed">
+
+                <!--Table head-->
+                <thead class="blue-grey lighten-4">
+                    <tr>
+                        <th>#</th>
+                        <th>Фото</th>
+                        <th>Название</th>
+                        <th>Описание</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+              <!--Table head-->
+    {% for good in goods %}
+                <!--Table body-->
+                <tbody>
+                    <tr>
+                        <th scope="row" style="vertical-align:middle;width:15%">{{ forloop.counter }}</th>
+                        <td><img src="../media/{{good.image_list.0|escape|safe|force_escape }}" alt="placeholder" class="img-thumbnail" style="vertical-align:middle;width:45%"></td>
+                        <td style="vertical-align:middle;width:15%">{{good.name}}</td>
+                        <td style="vertical-align:middle;width:40%">{{good.description}}</td>
+                        <td style="vertical-align:middle;width:15%">{{good.price}} UAH</td>
+                        <td style="vertical-align:middle;" onclick="document.location = '/goods/{{good.id}}';"><button type="button" class="btn btn-warning btn-rounded btn-sm my-0">Редактировать</button></td>
+                        <td style="vertical-align:middle;"><button type="button" id="{{good.id}}" name="deleteItem" class="btn btn-danger btn-rounded btn-sm my-0 deleteItem">Удалить</button></td>
+                    </tr>
+                   
+                </tbody>
+    {% endfor %}
+                </table>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/scripts/jquery-3.3.1.min.js' %}"></script>
+
+  {# JQUERY FILE UPLOAD SCRIPTS #}
+  <script src="{% static 'app/scripts/jquery.ui.widget.js' %}"></script>
+  <script src="{% static 'app/scripts/jquery.iframe-transport.js' %}"></script>
+  <script src="{% static 'app/scripts/jquery.fileupload.js' %}"></script>
+
+  {# PHOTOS PAGE SCRIPTS #}
+<script>
+     $('#cancelAdding').click(function () {
+    $('#form_new_good')[0].reset();
+        $("#gallery").find(".files").remove();
+     });
+
+    $('#addnewitem').click(function () {
+    $(function () {
+    var files = [];
+    var filesList = [];
+    $("#gallery").find(".files").remove();
+  /* 1. OPEN THE FILE EXPLORER WINDOW */
+  $(".js-add-photos").click(function () {
+    $("#addPhotos").click();
+  });
+
+  /* 2. INITIALIZE THE FILE UPLOAD COMPONENT */
+$("#addPhotos").fileupload({
+        dataType: 'json',
+    replaceFileInput: true,
+    stop: function (e, data) {
+                
+                var form = $('form_new_good'); // You need to use standard javascript object here
+                var formData = new FormData(form);
+                formData.append('images', files);
+                formData.append('new_good', $("#form_new_good").serialize());
+
+                function csrfSafeMethod(method) {
+                    // these HTTP methods do not require CSRF protection
+                    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+                }
+                $.ajaxSetup({
+                    beforeSend: function(xhr, settings) {
+                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                            xhr.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+                        }
+                    }
+
+                });
+   $.ajax({
+    url: "{% url 'basic_add_good' %}",
+    type: "post", // or "get"
+    contentType: "application/x-www-form-urlencoded;charset=utf-8",
+    dataType: 'json',
+    data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+    success: function(data) {
+      location.reload()
+    }});
+            $.ajax({
+                    url: '{% url 'basic_add_good' %}',
+                    data: formData,
+                    type: 'POST',
+                    contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                    processData: false, // NEEDED, DON'T OMIT THIS
+                    // ... Other options like success and etc
+                });
+    
+        },
+        done: function (e, data) {
+           files.push(data.result.name)
+          console.log(data.result.name)
+    },
+        add: function (e, data) {
+            filesList.push(data)
+           $.each(data.files, function (index, file) {
+                $("#gallery tbody").prepend("<tr class='files'><td> " + file.name + "</td></tr>")
+            })
+     $('#cancelAdding').click(function () {
+    location.reload();
+    console.log(s)
+    $('#form_new_good')[0].reset();
+        $("#gallery").find(".files").remove();
+    return true;
+     });
+            $("#uploadPhotos").click(function () {
+                data.submit();
+            });
+
+            
+            
+        },
+    });
+
+});
+    });
+</script>
+<script>
+$(document).ready(function(){
+     function csrfSafeMethod(method) {
+                    // these HTTP methods do not require CSRF protection
+                    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+                }
+    
+    $.ajaxSetup({
+                    beforeSend: function(xhr, settings) {
+                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                            xhr.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+                        }
+                    }
+                });
+
+   var btnClassClick = function(e){
+    if (confirm('Вы действительно ходите удалить товар?')) {
+    var formData = new FormData();
+    formData.append('delete', e.currentTarget.id);
+    $.ajax({
+                    url: '{% url 'basic_delete_good' %}',
+                    data: formData,
+                    type: 'POST',
+                    contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                    processData: false, // NEEDED, DON'T OMIT THIS
+                    // ... Other options like success and etc
+                });
+
+    $.ajax({
+    url: "{% url 'basic_delete_good' %}",
+    type: "post", // or "get"
+    contentType: "application/x-www-form-urlencoded;charset=utf-8",
+    dataType: 'json',
+    data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+    success: function(data) {
+      location.reload()
+    }});
+    
+} else {
+}
+    }
+    $('.deleteItem').on('click', btnClassClick);
+
+});
+</script>
+{% endblock scripts %}

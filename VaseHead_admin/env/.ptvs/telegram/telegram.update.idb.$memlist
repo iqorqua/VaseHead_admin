@@ -1,0 +1,8 @@
+CallbackQuery
+PreCheckoutQuery
+ShippingQuery
+Update
+Message
+InlineQuery
+TelegramObject
+ChosenInlineResult

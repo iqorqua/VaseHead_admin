@@ -1,0 +1,13 @@
+﻿{% if user.is_authenticated %}
+<form id="logoutForm" action="/logout" method="post" >
+    {% csrf_token %}
+    <ul class="nav " >
+        <li>Привет, {{ user.username }}!</li>
+        <li><a href=javascript:document.getElementById('logoutForm').submit()><i class="fa fa-sign-out"></i> <span >Выход</span></a></li>
+    </ul>
+
+</form>
+
+{% else %}
+<li><a href="{% url 'login' %}"><i class="fa fa-sign-in"></i> <span>Вход</span></a></li>
+{% endif %}

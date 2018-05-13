@@ -1,0 +1,186 @@
+﻿{% extends "app/layout.html" %}
+
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/datepicker.min.css' %}" />
+
+{% endblock styles %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h2>Аналитика</h2>
+    </div>
+</div>
+<div class="form-group">
+    <label>Дата </label>
+    <input type='text' id="picker" class='datepicker-here form-control' data-position="right center"/>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <label id="users_label">Новых пользователей: 0</label>
+        <ul class="list-group" id="list_new_users">
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <h2>Продажи</h2>
+            <canvas id="chartRadar" width="400" height="400"></canvas>
+    </div>
+    <div class="col-md-4">
+        <h2>Посещения</h2>
+            <canvas id="chartLine" width="400" height="400"></canvas>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+    <script src="{% static 'app/scripts/datepicker.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<script>
+
+                function csrfSafeMethod(method) {
+                    // these HTTP methods do not require CSRF protection
+                    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+                }
+                $.ajaxSetup({
+                    beforeSend: function(xhr, settings) {
+                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                            xhr.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+                        }
+                    }
+
+                });
+     $('#picker').datepicker({
+         onSelect: function (fd, d, picker) {
+    if (!d) return;
+             var formData = new FormData();
+                formData.append('date', fd);
+
+    $.ajax({
+    url: "{% url 'analitycs_json' %}",
+    type: "post", // or "get"
+                    contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                    processData: false, // NEEDED, DON'T OMIT THIS
+    dataType: 'json',
+    data: formData,
+    success: function(data) {
+    datas = (data+'').split('#')
+    drawLineChart(datas[0]);
+    drawBarSales(datas[1]);
+    showNewUsers(datas[2]);
+    }});
+        }
+    })
+     
+</script>
+
+<script>
+     function drawBarSales(data) {
+         var names = $.map($.parseJSON(data), function (obj, i) {
+            return obj.name;
+        }); 
+        var counts = $.map( $.parseJSON(data), function( obj, i ) { 
+            return obj.count;
+        }); 
+         var ctx = document.getElementById("chartRadar").getContext('2d');
+         var myChart = new Chart(ctx, {
+             type: 'bar',
+             data: {
+                 labels: names,
+                 datasets: [{
+                     label: 'Продано',
+                     data: counts,
+                     backgroundColor: [
+                         'rgba(255, 99, 132, 0.2)',
+                         'rgba(54, 162, 235, 0.2)',
+                         'rgba(255, 206, 86, 0.2)',
+                         'rgba(75, 192, 192, 0.2)',
+                         'rgba(153, 102, 255, 0.2)',
+                         'rgba(255, 159, 64, 0.2)'
+                     ],
+                     borderColor: [
+                         'rgba(255,99,132,1)',
+                         'rgba(54, 162, 235, 1)',
+                         'rgba(255, 206, 86, 1)',
+                         'rgba(75, 192, 192, 1)',
+                         'rgba(153, 102, 255, 1)',
+                         'rgba(255, 159, 64, 1)'
+                     ],
+                     borderWidth: 1
+                 }]
+             },
+             options: {
+                 scales: {
+                     yAxes: [{
+                         ticks: {
+                             beginAtZero: true
+                         }
+                     }]
+                 }
+             }
+         });
+     }
+</script>
+<script>
+    
+    function drawLineChart(data) {
+        var names = $.map( $.parseJSON(data), function( obj, i ) { 
+            return obj.fields.user_name;
+        }); 
+        var counts = $.map( $.parseJSON(data), function( obj, i ) { 
+            return obj.fields.messages_count;
+        }); 
+        var ctx = document.getElementById("chartLine").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: names,
+                datasets: [{
+                    label: 'Количество сообщений',
+                    data: counts,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+</script>
+<script>
+    function showNewUsers(data) {
+         var names = $.map($.parseJSON(data), function (obj, i) {
+            return obj.fields.name;
+        });
+        $(".el").remove()
+        $.each(names, function (key, value) {
+             $("#list_new_users").append('<li class="el">'+value+"</li>");
+        });
+        $("#users_label").text("Новых пользователей: " + names.length);
+}
+</script>
+{% endblock script %}

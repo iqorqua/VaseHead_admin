@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <Name>VaseHead_admin</Name>
+    <RootNamespace>VaseHead_admin</RootNamespace>
+    <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>aee03d76-e831-44cb-adf6-3f6960f4ceed</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <ProjectTypeGuids>{5F0BE9CA-D677-4A4D-8806-6076C0FAAD37};{349c5851-65df-11da-9384-00065b846f21};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <StartupFile>manage.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <WebBrowserUrl>http://localhost</WebBrowserUrl>
+    <LaunchProvider>Django launcher</LaunchProvider>
+    <DjangoSettingsModule>VaseHead_admin.settings</DjangoSettingsModule>
+    <OutputPath>.</OutputPath>
+    <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="app\admin.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\forms.py" />
+    <Compile Include="app\models.py" />
+    <Compile Include="app\tests.py" />
+    <Compile Include="app\views.py" />
+    <Compile Include="app\__init__.py" />
+    <Compile Include="app\migrations\__init__.py" />
+    <Compile Include="manage.py" />
+    <Compile Include="VaseHead_admin\bot_settings.py" />
+    <Compile Include="VaseHead_admin\conversation.py" />
+    <Compile Include="VaseHead_admin\good.py" />
+    <Compile Include="VaseHead_admin\new_member_check.py" />
+    <Compile Include="VaseHead_admin\response_maker.py" />
+    <Compile Include="VaseHead_admin\states.py" />
+    <Compile Include="VaseHead_admin\thirdparty_command.py" />
+    <Compile Include="VaseHead_admin\VaseHeadSite.py" />
+    <Compile Include="VaseHead_admin\__init__.py" />
+    <Compile Include="VaseHead_admin\settings.py" />
+    <Compile Include="VaseHead_admin\urls.py" />
+    <Compile Include="VaseHead_admin\wsgi.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="app\" />
+    <Folder Include="app\migrations\" />
+    <Folder Include="app\static\" />
+    <Folder Include="app\static\app\" />
+    <Folder Include="app\static\app\content\" />
+    <Folder Include="app\static\app\fonts\" />
+    <Folder Include="app\static\app\img\" />
+    <Folder Include="app\static\app\scripts\" />
+    <Folder Include="app\static\app\scripts\i18n\" />
+    <Folder Include="app\templates\" />
+    <Folder Include="app\templates\app\" />
+    <Folder Include="VaseHead_admin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app\static\app\content\datepicker.min.css" />
+    <Content Include="app\static\app\content\emoji.css" />
+    <Content Include="app\static\app\content\emoji.css.map" />
+    <Content Include="app\static\app\content\SidebarNav.min.css" />
+    <Content Include="app\static\app\content\validator.css" />
+    <Content Include="app\static\app\img\blank.gif" />
+    <Content Include="app\static\app\img\emoji_spritesheet_0.png" />
+    <Content Include="app\static\app\img\emoji_spritesheet_1.png" />
+    <Content Include="app\static\app\img\emoji_spritesheet_2.png" />
+    <Content Include="app\static\app\img\emoji_spritesheet_3.png" />
+    <Content Include="app\static\app\img\emoji_spritesheet_4.png" />
+    <Content Include="app\static\app\img\IconsetSmiles.png" />
+    <Content Include="app\static\app\img\IconsetSmiles_1x.png" />
+    <Content Include="app\static\app\img\IconsetW.png" />
+    <Content Include="app\static\app\img\IconsetW_1x.png" />
+    <Content Include="app\static\app\scripts\config.js" />
+    <Content Include="app\static\app\scripts\datepicker.js" />
+    <Content Include="app\static\app\scripts\datepicker.min.js" />
+    <Content Include="app\static\app\scripts\emoji-picker.coffee" />
+    <Content Include="app\static\app\scripts\emoji-picker.js" />
+    <Content Include="app\static\app\scripts\emoji-picker.js.map" />
+    <Content Include="app\static\app\scripts\i18n\datepicker.cs.js" />
+    <Content Include="app\static\app\scripts\i18n\datepicker.da.js" />
+    <Content Include="app\static\app\scripts\i18n\datepicker.de.js" />
+    <Content Include="app\static\app\scripts\i18n\datepicker.en.js" />
+    <Content Include="app\static\app\scripts\i18n\datepicker.es.js" />
+    <Content Include="app\static\app\scripts\i18n\datepicker.fi.js" />
+    <Content Include="app\static\app\scripts\i18n\datepicker.fr.js" />
+    <Content Include="app\static\app\scripts\i18n\datepicker.hu.js" />
+    <Content Include="app\static\app\scripts\i18n\datepicker.nl.js" />
+    <Content Include="app\static\app\scripts\i18n\datepicker.pl.js" />
+    <Content Include="app\static\app\scripts\i18n\datepicker.pt-BR.js" />
+    <Content Include="app\static\app\scripts\i18n\datepicker.pt.js" />
+    <Content Include="app\static\app\scripts\i18n\datepicker.ro.js" />
+    <Content Include="app\static\app\scripts\i18n\datepicker.sk.js" />
+    <Content Include="app\static\app\scripts\i18n\datepicker.zh.js" />
+    <Content Include="app\static\app\scripts\jquery-1.12.4.min.js" />
+    <Content Include="app\static\app\scripts\jquery-3.3.1.min.js" />
+    <Content Include="app\static\app\scripts\jquery.emojiarea.js" />
+    <Content Include="app\static\app\scripts\jquery.fileupload.js" />
+    <Content Include="app\static\app\scripts\jquery.iframe-transport.js" />
+    <Content Include="app\static\app\scripts\jquery.ui.widget.js" />
+    <Content Include="app\static\app\scripts\SidebarNav.min.js" />
+    <Content Include="app\static\app\scripts\util.js" />
+    <Content Include="app\templates\app\add_item_modal.html" />
+    <Content Include="app\templates\app\analytics.html" />
+    <Content Include="app\templates\app\clients.html" />
+    <Content Include="app\templates\app\coworking.html" />
+    <Content Include="app\templates\app\goods.html" />
+    <Content Include="app\templates\app\good_item.html" />
+    <Content Include="app\templates\app\orders.html" />
+    <Content Include="app\templates\app\sendingmass.html" />
+    <Content Include="app\templates\app\settings.html" />
+    <Content Include="requirements.txt" />
+    <Content Include="db.sqlite3" />
+    <Content Include="app\static\app\content\bootstrap.css" />
+    <Content Include="app\static\app\content\bootstrap.min.css" />
+    <Content Include="app\static\app\content\site.css" />
+    <Content Include="app\static\app\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="app\static\app\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="app\static\app\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="app\static\app\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="app\static\app\scripts\bootstrap.js" />
+    <Content Include="app\static\app\scripts\bootstrap.min.js" />
+    <Content Include="app\static\app\scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="app\static\app\scripts\jquery-1.10.2.js" />
+    <Content Include="app\static\app\scripts\jquery-1.10.2.min.js" />
+    <Content Include="app\static\app\scripts\jquery-1.10.2.min.map" />
+    <Content Include="app\static\app\scripts\jquery.validate-vsdoc.js" />
+    <Content Include="app\static\app\scripts\jquery.validate.js" />
+    <Content Include="app\static\app\scripts\jquery.validate.min.js" />
+    <Content Include="app\static\app\scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="app\static\app\scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="app\static\app\scripts\modernizr-2.6.2.js" />
+    <Content Include="app\static\app\scripts\respond.js" />
+    <Content Include="app\static\app\scripts\respond.min.js" />
+    <Content Include="app\static\app\scripts\_references.js" />
+    <Content Include="app\templates\app\about.html" />
+    <Content Include="app\templates\app\contact.html" />
+    <Content Include="app\templates\app\index.html" />
+    <Content Include="app\templates\app\layout.html" />
+    <Content Include="app\templates\app\login.html" />
+    <Content Include="app\templates\app\loginpartial.html" />
+    <Content Include="VaseHead_admin\header.jpg" />
+    <Content Include="VaseHead_admin\settings.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.html">
+      <SubType>WebBrowser</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="env\">
+      <Id>env</Id>
+      <Version>3.6</Version>
+      <Description>env (Python 3.6 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Django.targets" />
+  <!-- Specify pre- and post-build commands in the BeforeBuild and 
+       AfterBuild targets below. -->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <AutoAssignPort>True</AutoAssignPort>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
